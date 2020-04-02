@@ -6,6 +6,7 @@ const app = express();
 
 const newTask = require("./routes/newTask");
 const tasks = require("./routes/allTasks");
+const deleteTask =require("./routes/delTask")
 
 const database = require("./routes/db");
 
@@ -15,5 +16,6 @@ app.use(cors());
 app.use(database);
 app.use(tasks);
 app.use(newTask);
+app.use(deleteTask);
 
 module.exports = app;
