@@ -3,17 +3,19 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 
 const app = express();
+const database = require("./routes/db");
 
 const newTask = require("./routes/newTask");
 const tasks = require("./routes/allTasks");
 const deleteTask =require("./routes/delTask")
+const editTask = require("./routes/editTask")
 
-const database = require("./routes/db");
 
 app.use(bodyParser.json());
 app.use(cors());
 
 app.use(database);
+app.use(editTask);
 app.use(tasks);
 app.use(newTask);
 app.use(deleteTask);

@@ -4,12 +4,12 @@ const router = express.Router();
 
 const getTask = (req, res) => {
   const db = dbFunc();
-  const { name } = req.params;
-  console.log(name);
+  const { ID } = req.params;
+
  const respArray = [];
   db.serialize(() => {
     db.each(
-      "SELECT * FROM games where name=luca",
+      `SELECT * FROM games where id=${ID}`,
       (err, row) => {
         respArray.push(row);
       },
@@ -21,7 +21,7 @@ const getTask = (req, res) => {
         res.send(JSON.stringify(respArray));
       },
     );
-  });  console.log(respArray);
+  });  
 };
 
 
