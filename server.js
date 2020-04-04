@@ -1,12 +1,6 @@
 const app = require("./app");
 
 const http = require("http");
-const fs = require("fs");
-
-const credentials = {
-  key: fs.readFileSync("key.pem"),
-  cert: fs.readFileSync("cert.pem")
-};
 
 const server = http.createServer(app);
 

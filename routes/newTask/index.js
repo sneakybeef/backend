@@ -9,7 +9,7 @@ const newTask = (req, res) => {
   const infoValues = [];
   const infoKeys = [];
   const taskData = Object.entries(req.body);
-  console.log("taskData",taskData);
+
   taskData.forEach(([infoKey, infoValue]) => {
     if (infoValue === "") infoValues.push(null);
     else {
