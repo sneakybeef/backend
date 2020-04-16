@@ -4,7 +4,6 @@ const path = require('path');
 const dbPath = path.resolve(__dirname, 'data.db');
 
 const getDb = () => {
-	console.log('db');
 	return new sqlite3.Database(dbPath);
 };
 

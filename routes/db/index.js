@@ -1,21 +1,19 @@
-const express = require("express");
-const dbFunc = require("../../database/database.js");
+const express = require('express');
+const dbFunc = require('../../database/database.js');
 console.log(dbFunc);
 
 const router = express.Router();
-const database = (req, res) => {
-  const db = dbFunc();
- 
-  db.run(
-    "CREATE TABLE tasks(ID INTEGER PRIMARY KEY AUTOINCREMENT,name text,description text,urgency numeric,done boolean)",
-    () => {
-      db.close();
-    }
-  );
+const database = async (req, res) => {
+	const db = dbFunc();
+	console.log(db, 'XXXXXXXXXXXXXXX');
 
-  console.log("db");
+	db.run(
+		'CREATE TABLE tasks(ID INTEGER PRIMARY KEY AUTOINCREMENT,name text,description text,urgency numeric,done boolean)'
+	);
+
+	console.log('db');
 };
 
-router.get("/db", database);
+router.get('/db', database);
 
 module.exports = router;

@@ -1,7 +1,7 @@
 const express = require('express');
 const dbFunc = require('../../database/database.js');
 const router = express.Router();
-
+const checkAuth = require('../middleware/checkAuth.js');
 const tasks = (req, res) => {
 	const db = dbFunc();
 
@@ -15,7 +15,6 @@ const tasks = (req, res) => {
 			},
 			(err) => {
 				if (err) {
-					console.log(resp);
 					res.send('error getting games');
 				}
 
@@ -24,6 +23,6 @@ const tasks = (req, res) => {
 		);
 	});
 };
-router.get('/tasks', tasks);
+router.get('/tasks', checkAuth, tasks);
 
 module.exports = router;
