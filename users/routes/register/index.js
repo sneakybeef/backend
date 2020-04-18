@@ -4,9 +4,8 @@ const bcrypt = require('bcrypt');
 
 const { addUser, getUserByEmail, getUserByUserName } = require('../../database/users.js');
 
-const signup = async (req, res, next) => {
-	const { email, userName } = req.body;
-	console.log(login);
+const register = async (req, res, next) => {
+	const { email, userName, password } = req.body;
 
 	getUserByEmail(email)
 		.then((resp) => {
@@ -23,7 +22,7 @@ const signup = async (req, res, next) => {
 		})
 		.catch((err) => res.status(501).json({ message: 'User not added' }));
 
-	bcrypt.hash(req.body.password, 10, async (err, hash) => {
+	bcrypt.hash(password, 10, async (err, hash) => {
 		if (err) {
 			return res.status(500).json({ error: err });
 		} else {
@@ -39,6 +38,6 @@ const signup = async (req, res, next) => {
 		}
 	});
 };
-router.post('/signup', signup);
+router.post('/register', register);
 
 module.exports = router;

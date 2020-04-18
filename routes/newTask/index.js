@@ -5,13 +5,13 @@ const checkAuth = require('../middleware/checkAuth.js');
 const router = express.Router();
 
 const newTask = (req, res) => {
-	const { id, email } = req.userData;
 	const db = getDb();
 
 	const infoValues = [];
 	const infoKeys = [];
-	const taskData = Object.entries(req.body);
 
+	const taskData = Object.entries(req.body);
+	console.log(taskData, 'data');
 	taskData.forEach(([ infoKey, infoValue ]) => {
 		if (infoValue === '') infoValues.push(null);
 		else {
@@ -26,6 +26,6 @@ const newTask = (req, res) => {
 	res.send(`task added ${JSON.stringify(req.body)} `);
 };
 
-router.post('/newTask', checkAuth, newTask);
+router.post('/newTask', newTask);
 
 module.exports = router;

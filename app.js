@@ -12,7 +12,7 @@ const deleteTask = require('./routes/delTask');
 const editTask = require('./routes/editTask');
 
 const createDb = require('./users/routes/createDb');
-const signup = require('./users/routes/signup');
+const register = require('./users/routes/register');
 const login = require('./users/routes/signin');
 
 var corsOptions = {
@@ -27,7 +27,7 @@ app.use(cookieParser());
 app.use(cors(corsOptions));
 
 app.use(createDb);
-app.use('/user', signup);
+app.use('/user', register);
 app.use('/user', login);
 
 app.use(database);
