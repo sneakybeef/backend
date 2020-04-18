@@ -6,29 +6,32 @@ const db = new sqlite3.Database(dbPath);
 
 const getDb = () => db;
 
-const getTasks = async () => {
+const getTasks = async (userEmail) => {
 	return new Promise((resolve, reject) => {
-		db.all('SELECT * FROM tasks order by urgency desc', (err, rows) => {
-			if (err) {
-				reject(err);
+		db.all(
+			'SELECT id ,name,description,urgency,done FROM tasks WHERE userEmail=? order by urgency desc',
+			userEmail,
+			(err, rows) => {
+				if (err) {
+					reject(err);
+				}
+				if (rows) {
+					resolve(rows);
+				}
 			}
-			if (rows) {
-				resolve(rows);
-			}
-		});
+		);
 	});
 };
 
-const deleteTask = async (ID) => {
+const deleteTask = async (id) => {
 	return new Promise((resolve, reject) => {
-		const query = `DELETE FROM tasks WHERE ID=${ID}`;
-		db.run(query, [], (err, success) => {
+		const query = `DELETE FROM tasks WHERE id=?`;
+		db.run(query, id, (err) => {
 			if (err) {
 				reject(err);
 			}
-			if (success) {
-				resolve(ID);
-			}
+			console.log('success');
+			resolve(id);
 		});
 	});
 };

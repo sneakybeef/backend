@@ -6,7 +6,7 @@ const database = async (req, res) => {
 	const db = getDb();
 
 	db.run(
-		'CREATE TABLE tasks(ID INTEGER PRIMARY KEY AUTOINCREMENT,name text,description text,urgency numeric,done boolean)'
+		'CREATE TABLE tasks(id INTEGER PRIMARY KEY AUTOINCREMENT,userEmail text,name text,description text,urgency numeric,done boolean)'
 	);
 
 	console.log('db');

@@ -6,12 +6,14 @@ const router = express.Router();
 
 const newTask = (req, res) => {
 	const db = getDb();
-
+	const { userData, body } = req;
 	const infoValues = [];
 	const infoKeys = [];
 
-	const taskData = Object.entries(req.body);
-	console.log(taskData, 'data');
+	const taskData = Object.entries(body);
+	const email = [ 'userEmail', userData.email ];
+	taskData.push(email);
+
 	taskData.forEach(([ infoKey, infoValue ]) => {
 		if (infoValue === '') infoValues.push(null);
 		else {
@@ -23,9 +25,9 @@ const newTask = (req, res) => {
 	const placeholders = infoKeys.map(() => '(?)');
 	const query = `INSERT INTO tasks (${infoKeys}) VALUES (${placeholders})`;
 	db.run(query, infoValues);
-	res.send(`task added ${JSON.stringify(req.body)} `);
+	res.send(`task added ${JSON.stringify(body)} `);
 };
 
-router.post('/newTask', newTask);
+router.post('/newTask', checkAuth, newTask);
 
 module.exports = router;
