@@ -6,6 +6,7 @@ const { addUser, getUserByEmail, getUserByUserName } = require('../../database/u
 
 const signup = async (req, res, next) => {
 	const { email, userName } = req.body;
+	console.log(login);
 
 	getUserByEmail(email)
 		.then((resp) => {

@@ -1,9 +1,9 @@
 const express = require('express');
-const dbFunc = require('../../database/database.js');
+const { getDb } = require('../../database/database.js');
 const router = express.Router();
 
 const getTask = (req, res) => {
-	const db = dbFunc();
+	const db = getDb();
 	const { ID } = req.params;
 
 	const respArray = [];
@@ -15,7 +15,7 @@ const getTask = (req, res) => {
 			},
 			(err) => {
 				if (err) {
-					res.send('error getting games');
+					return res.send('error getting games');
 				}
 				res.setHeader('Content-Type', 'application/json');
 				res.send(JSON.stringify(respArray));

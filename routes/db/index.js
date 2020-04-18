@@ -1,11 +1,9 @@
 const express = require('express');
-const dbFunc = require('../../database/database.js');
-console.log(dbFunc);
+const { getDb } = require('../../database/database.js');
 
 const router = express.Router();
 const database = async (req, res) => {
-	const db = dbFunc();
-	console.log(db, 'XXXXXXXXXXXXXXX');
+	const db = getDb();
 
 	db.run(
 		'CREATE TABLE tasks(ID INTEGER PRIMARY KEY AUTOINCREMENT,name text,description text,urgency numeric,done boolean)'

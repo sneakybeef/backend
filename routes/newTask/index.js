@@ -1,11 +1,12 @@
 const express = require('express');
 
-const dbFunc = require('../../database/database.js');
-
+const { getDb } = require('../../database/database.js');
+const checkAuth = require('../middleware/checkAuth.js');
 const router = express.Router();
 
 const newTask = (req, res) => {
-	const db = dbFunc();
+	const { id, email } = req.userData;
+	const db = getDb();
 
 	const infoValues = [];
 	const infoKeys = [];
@@ -25,6 +26,6 @@ const newTask = (req, res) => {
 	res.send(`task added ${JSON.stringify(req.body)} `);
 };
 
-router.post('/newTask', newTask);
+router.post('/newTask', checkAuth, newTask);
 
 module.exports = router;

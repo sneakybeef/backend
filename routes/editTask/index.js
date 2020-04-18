@@ -1,11 +1,11 @@
 const express = require('express');
 
-const dbFunc = require('../../database/database.js');
+const { getDb } = require('../../database/database.js');
 
 const router = express.Router();
 
 const editTask = (req, res) => {
-	const db = dbFunc();
+	const db = getDb();
 	const { task } = req.body;
 	const sql = `
     UPDATE tasks

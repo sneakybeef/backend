@@ -27,6 +27,16 @@ const signin = async (req, res, next) => {
 						process.env.JWT_KEY,
 						{ expiresIn: '1h' }
 					);
+					const cookie = req.cookies.token;
+
+					if (cookie === undefined) {
+						res.cookie('token', token, { maxAge: 900000, httpOnly: true });
+
+						console.log('cookie created successfully');
+					} else {
+						console.log('cookie exists', cookie);
+					}
+
 					return res.status(200).json({
 						message: 'Auth successful',
 						token
@@ -37,6 +47,6 @@ const signin = async (req, res, next) => {
 		})
 		.catch((err) => res.status(401).json({ message: 'Auth failed' }));
 };
-router.post('/signin', signin);
+router.post('/login', signin);
 
 module.exports = router;

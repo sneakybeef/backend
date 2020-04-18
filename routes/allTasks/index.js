@@ -1,27 +1,16 @@
 const express = require('express');
-const dbFunc = require('../../database/database.js');
+const { getTasks } = require('../../database/database.js');
 const router = express.Router();
 const checkAuth = require('../middleware/checkAuth.js');
 const tasks = (req, res) => {
-	const db = dbFunc();
-
-	let respArray = [];
-
-	db.serialize(() => {
-		db.each(
-			'SELECT * FROM tasks order by urgency desc',
-			(err, row) => {
-				respArray.push(row);
-			},
-			(err) => {
-				if (err) {
-					res.send('error getting games');
-				}
-
-				res.send(JSON.stringify(respArray));
+	console.log('request');
+	getTasks()
+		.then((tasks) => {
+			if (tasks.length > 0) {
+				res.status(200).send(JSON.stringify(tasks));
 			}
-		);
-	});
+		})
+		.catch((err) => res.status(401).json({ errd: err, message: 'Auth failed' }));
 };
 router.get('/tasks', checkAuth, tasks);
 

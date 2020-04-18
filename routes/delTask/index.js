@@ -1,18 +1,18 @@
-const express = require("express");
+const express = require('express');
 
-const dbFunc = require("../../database/database.js");
+const { deleteTask } = require('../../database/database.js');
 
 const router = express.Router();
 
-const delTask = (req, res) => {    
-
-    const db = dbFunc();
-    const { ID } = req.query;
-    const query = `DELETE FROM tasks WHERE ID=${ID}`;
-    db.run(query);
-    res.send(`task deleted  ${ID} `);
+const delTask = (req, res) => {
+	const ID = req.body.ID;
+	deleteTask(ID)
+		.then((ID) => {
+			res.send(`task deleted  ${ID} `);
+		})
+		.catch(res.send(`task not deleted  ${ID} `));
 };
 
-router.delete("/deleteTask", delTask);
+router.delete('/deleteTask', delTask);
 
 module.exports = router;
