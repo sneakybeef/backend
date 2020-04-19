@@ -25,24 +25,24 @@ const signin = async (req, res, next) => {
 							userId: user.id
 						},
 						process.env.JWT_KEY,
-						{ expiresIn: '1h' }
+						{ expiresIn: '1d' }
 					);
 					const cookie = req.cookies.token;
 
-					if (cookie === undefined) {
-						res.cookie('token', token, { maxAge: 900000, httpOnly: true });
-
+					if (cookie === undefined || cookie === '') {
 						console.log('cookie created successfully');
+						res.cookie('token', token, { maxAge: 24 * 3600000, httpOnly: true });
+						return res.status(200).json({
+							message: 'Auth successful'
+						});
 					} else {
 						console.log('cookie exists', cookie);
+						return res.status(200).json({
+							message: 'Auth successful'
+						});
 					}
-
-					return res.status(200).json({
-						message: 'Auth successful',
-						token
-					});
 				}
-				return res.status(200).json({ message: 'Auth failed' });
+				return res.status(401).json({ message: 'Auth failed' });
 			});
 		})
 		.catch((err) => res.status(401).json({ message: 'Auth failed' }));

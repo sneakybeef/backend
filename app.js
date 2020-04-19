@@ -13,9 +13,10 @@ const editTask = require('./routes/editTask');
 
 const createDb = require('./users/routes/createDb');
 const register = require('./users/routes/register');
-const login = require('./users/routes/signin');
+const login = require('./users/routes/login');
+const logout = require('./users/routes/logout');
 
-var corsOptions = {
+const corsOptions = {
 	origin: 'http://localhost:3000',
 	credentials: true,
 	methods: 'GET,PUT,POST,DELETE,UPDATE,OPTIONS',
@@ -29,6 +30,7 @@ app.use(cors(corsOptions));
 app.use(createDb);
 app.use('/user', register);
 app.use('/user', login);
+app.use('/user', logout);
 
 app.use(database);
 app.use(editTask);
